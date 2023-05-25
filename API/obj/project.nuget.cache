@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "96b1VOwT9HQxrdqvDfl2M7eHIDt3rKiQVOT1C4RC+pR7UdDWgUqecxyMcGKz3K1apyadwNFJmWiYq/n6rpWSYQ==",
+  "success": true,
+  "projectFilePath": "A:\\VS2022\\multas-ab-api\\API\\API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\xander\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\xander\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\xander\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\xander\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\xander\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\xander\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
