@@ -1,4 +1,6 @@
 ﻿using API.Extensions;
+using Infrastructure.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace API
 {
@@ -17,7 +19,7 @@ namespace API
         {
 
             services.AddControllers();
-
+            services.AddDbContext<TrafficDbContext>(options => options.UseSqlite(this._configuracion.GetConnectionString("DefaultConnection")));
 
             services.AddApplicationServices(_configuracion);
             services.AddSwaggerDocumentation();
