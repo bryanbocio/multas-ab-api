@@ -14,7 +14,6 @@ namespace Core.Entities.TrafficFine
         public string comment { get; set; }
         public string latitude { get; set; }
         public string longitude { get; set; }
-
         public DateTime DateCreated { get; }= DateTime.Now;
 
     }
