@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Entities.TrafficFine
+﻿namespace Core.Entities.TrafficFine
 {
     public class TrafficFine : BaseEntity
     {
-        public string IdDriver { get; set; }
+        public Driver.Driver Driver { get; set; }
+        public int DriverId { get; set; }
+        public Agent.Agent Agent { get; set; }
+        public int AgentId { get; set; }
         public string CarPlate { get; set; }
-        public string reason { get; set; }
-        public string comment { get; set; }
-        public string latitude { get; set; }
-        public string longitude { get; set; }
+        public string Reason { get; set; }
+        public string Comment { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
         public DateTime DateCreated { get; }= DateTime.Now;
 
+
+    
     }
 }
