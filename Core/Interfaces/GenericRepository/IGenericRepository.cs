@@ -9,6 +9,6 @@ namespace Core.Interfaces.GenericRepository
 {
     public interface IGenericRepository<T> where T : BaseEntity
     {
-
+        Task<T> GetByIdAsync(int id);
     }
 }
