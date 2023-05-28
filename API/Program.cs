@@ -1,3 +1,4 @@
+using Infrastructure.Data.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,7 +6,7 @@ namespace API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
             using (var scope = host.Services.CreateScope())
@@ -16,7 +17,8 @@ namespace API
                 try
                 {
 
-
+                    var trafficDbContext = services.GetRequiredService<TrafficDbContext>();
+                    await trafficDbContext.Database.MigrateAsync();
 
                 }
                 catch (Exception exception)
