@@ -25,8 +25,6 @@ namespace Core.Specification
 
             AddInclude(fine => fine.Driver);
             AddInclude(fine => fine.Agent);
-            AddOrderBy(fine => fine.DateCreated);
-
         }
 
         public TrafficFineWithDriverAndAgentSpecification(int id) : base(fine => fine.Id == id)
