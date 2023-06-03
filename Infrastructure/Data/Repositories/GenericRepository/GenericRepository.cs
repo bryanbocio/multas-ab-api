@@ -32,12 +32,12 @@ namespace Infrastructure.Data.GenericRepository.Repositories
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task<T> getEntityWithSpecification(ISpecification<T> specification)
+        public async Task<T> GetEntityWithSpecification(ISpecification<T> specification)
         {
             return await ApplySpecification(specification).FirstOrDefaultAsync();
         }
 
-        public async Task<IReadOnlyList<T>> listAsync(ISpecification<T> specification)
+        public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> specification)
         {
             return await ApplySpecification(specification).ToListAsync();
         }
