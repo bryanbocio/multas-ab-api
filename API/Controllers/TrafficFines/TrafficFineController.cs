@@ -1,4 +1,5 @@
-﻿using Core.Entities.TrafficFine;
+﻿using API.Errors;
+using Core.Entities.TrafficFine;
 using Core.Interfaces.GenericRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace API.Controllers.TrafficFines
         {
             var trafficFine = await _fineRepository.GetByIdAsync(id);
 
-            if(Object.Equals(trafficFine, null)) return NotFound("No fue encontrado esta multa");
+            if(Object.Equals(trafficFine, null)) return NotFound(new ApiResponse(404));
 
             return Ok(trafficFine);
         }
