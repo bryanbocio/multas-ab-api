@@ -14,6 +14,20 @@
         public DateTime DateCreated { get; }= DateTime.Now;
 
 
+        public TrafficFine()
+        {
+
+        }
+        public TrafficFine(Driver.Driver driver, Agent.Agent agent, string carPlate, string reason, string comment, string latitude, string longitude)
+        {
+            Driver= driver;
+            Agent= agent;
+            CarPlate= carPlate;
+            Reason= reason;
+            Comment= comment;
+            Latitude= latitude;
+            Longitude= longitude;
+        }
     
     }
 }
