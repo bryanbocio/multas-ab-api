@@ -13,13 +13,13 @@ namespace API.Helpers
                                 .ForMember(fineDto=> fineDto.DriverName, options=> options.MapFrom(fine=> fine.Driver.Name))
                                 .ForMember(fineDto=> fineDto.DriverIdentity, options=> options.MapFrom(fine=> fine.Driver.DriverId))
                                 .ForMember(fineDto=> fineDto.DriverPhoneNumber, options=> options.MapFrom(fine=> fine.Driver.Number))
-                                .ForMember(fineDto=> fineDto.AgentIdentity, options=> options.MapFrom(fine=> fine.Agent.Name));
+                                .ForMember(fineDto=> fineDto.AgentIdentity, options=> options.MapFrom(fine=> fine.Agent.AgentId));
 
             CreateMap<TrafficFineDto, TrafficFine >()
-                                .ForMember(fine => fine.Driver.Name, options => options.MapFrom(fineDto => fineDto.DriverName))
-                                .ForMember(fine => fine.Driver.DriverId, options => options.MapFrom(fineDto => fineDto.DriverIdentity))
-                                .ForMember(fine => fine.Driver.Number, options => options.MapFrom(fineDto => fineDto.DriverPhoneNumber))
-                                .ForMember(fine => fine.Agent.AgentId, options => options.MapFrom(fineDto => fineDto.AgentIdentity));
+                                .ForPath(fine => fine.Driver.Name, options => options.MapFrom(fineDto => fineDto.DriverName))
+                                .ForPath(fine => fine.Driver.DriverId, options => options.MapFrom(fineDto => fineDto.DriverIdentity))
+                                .ForPath(fine => fine.Driver.Number, options => options.MapFrom(fineDto => fineDto.DriverPhoneNumber))
+                                .ForPath(fine => fine.Agent.AgentId, options => options.MapFrom(fineDto => fineDto.AgentIdentity));
 
 
             CreateMap<Driver, DriverToReturnDto>()
