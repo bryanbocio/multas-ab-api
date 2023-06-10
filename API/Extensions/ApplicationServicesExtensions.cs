@@ -1,9 +1,11 @@
 ﻿using API.Errors;
 using API.Helpers;
 using Core.Interfaces.GenericRepository;
+using Core.Interfaces.Services;
 using Core.Interfaces.UnitOfWork;
 using Infrastructure.Data.GenericRepository.Repositories;
 using Infrastructure.Data.Repositories.UnitOfWork;
+using Infrastructure.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Extensions
@@ -15,6 +17,8 @@ namespace API.Extensions
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<ITrafficFineService, TrafficFineService>();
 
 
 
