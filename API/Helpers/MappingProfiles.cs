@@ -8,7 +8,7 @@ namespace API.Helpers
     {
         public MappingProfiles()
         {
-            CreateMap<TrafficFine, TrafficFineDto>()
+            CreateMap<TrafficFine, TrafficFineToReturnDto>()
                             .ForMember(fineDto=> fineDto.DriverName, options=> options.MapFrom(fine=> fine.Driver.Name))
                             .ForMember(fineDto=> fineDto.DriverIdentity, options=> options.MapFrom(fine=> fine.Driver.DriverId))
                             .ForMember(fineDto=> fineDto.DriverPhoneNumber, options=> options.MapFrom(fine=> fine.Driver.Number))
