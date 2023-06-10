@@ -10,7 +10,6 @@ namespace Core.Entities
     {
         public string Name { get; set; }
         public string LastName{ get; set; }
-
         public string Number { get; set; }
     }
 }

@@ -20,6 +20,7 @@
                 401 => "Authorized, you are not",
                 404 => "Resource found, it was not",
                 500 => "Errors are the path to the dark side. Errors lead to anger. Anger leads to hate. Hate leads to career change",
+                201=>"Has been created successfully",
                 _ => null
             };
         }
