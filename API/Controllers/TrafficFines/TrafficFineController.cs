@@ -2,10 +2,8 @@
 using API.Errors;
 using API.Helpers;
 using AutoMapper;
-using Core.Entities.Agent;
 using Core.Entities.Driver;
 using Core.Entities.TrafficFine;
-using Core.Interfaces.GenericRepository;
 using Core.Interfaces.Services;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
