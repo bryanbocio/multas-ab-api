@@ -1,10 +1,12 @@
 ﻿using API.DTOs;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities.Driver;
 using Core.Interfaces.GenericRepository;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
+using Core.Specification.Parameters.Driver;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Drivers
@@ -19,6 +21,24 @@ namespace API.Controllers.Drivers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
+
+        [HttpGet]
+        public async Task<ActionResult<Pagination<DriverToReturnDto>>> GetDrivers([FromQuery] DriverSpecificationParameters parameter)
+        {
+            var specifications = new DriverSpecification(parameter);
+
+            var countSpecification = specifications;
+
+            var totalItem = await _unitOfWork.Repository<Driver>().CountAsync(countSpecification);
+
+            var drivers = await _unitOfWork.Repository<Driver>().ListAsync(specifications);
+
+            var data = _mapper.Map<IReadOnlyList<Driver>, IReadOnlyList<DriverToReturnDto>>(drivers);
+
+            return Ok(new Pagination<DriverToReturnDto>(parameter.PageIndex, parameter.PageSize, totalItem, data));
+        }
+
 
         [HttpPost]
         public async Task<ActionResult> CreateDriver(DriverDto driver)
