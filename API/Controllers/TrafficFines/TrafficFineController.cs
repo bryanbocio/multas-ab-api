@@ -6,6 +6,7 @@ using Core.Entities.Agent;
 using Core.Entities.Driver;
 using Core.Entities.TrafficFine;
 using Core.Interfaces.GenericRepository;
+using Core.Interfaces.Services;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
 using Core.Specification.Parameters.TrafficFine;
@@ -18,12 +19,14 @@ namespace API.Controllers.TrafficFines
     {
 
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ITrafficFineService _trafficFineService;
         private readonly IMapper _mapper;
 
-        public TrafficFineController(IMapper mapper,IUnitOfWork unitOfWork)
+        public TrafficFineController(IMapper mapper,IUnitOfWork unitOfWork, ITrafficFineService trafficFineService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _trafficFineService = trafficFineService;
         }
 
 
@@ -58,7 +61,34 @@ namespace API.Controllers.TrafficFines
 
 
 
-  
+        [HttpPost]
+        public async Task<ActionResult<TrafficFine>> CreateTrafficFine(TrafficFineDto trafficFineDto)
+        {
+            if (_unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(trafficFineDto.DriverIdentity)) == null)
+            {
+                return BadRequest(new ApiResponse(404, "The driver does not exits"));
+            }
+
+            var trafficFineCreated=await _trafficFineService.CreateTrafficFine
+                (
+                 trafficFineDto.DriverIdentity,
+                 trafficFineDto.AgentIdentity,
+                 trafficFineDto.CarPlate,
+                 trafficFineDto.Reason,
+                 trafficFineDto.Comment,
+                 trafficFineDto.Latitude,
+                 trafficFineDto.Longitude,
+                 trafficFineDto.DateCreated
+                );
+
+            if (trafficFineCreated == null) return BadRequest(new ApiResponse(400, "Problems creating traffic fine"));
+
+            return Ok(trafficFineCreated);
+        }
+
+
+
+        
 
     }
 }
