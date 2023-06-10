@@ -1,9 +1,11 @@
 ﻿using API.DTOs;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities.Agent;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
+using Core.Specification.Parameters.Driver;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Agents
@@ -19,6 +21,22 @@ namespace API.Controllers.Agents
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Pagination<AgentToReturn>>> GetAgents([FromQuery] AgentSpecificationParameter parameter)
+        {
+            var specifications = new AgentSpecification(parameter);
+            
+            var countSpecification = specifications;
+            
+            var totalItem= await _unitOfWork.Repository<Agent>().CountAsync(countSpecification);
+
+            var agents = await _unitOfWork.Repository<Agent>().ListAsync(specifications);
+
+            var data = _mapper.Map<IReadOnlyList<Agent>, IReadOnlyList<AgentToReturn>>(agents);
+
+            return Ok(new Pagination<AgentToReturn>(parameter.PageIndex, parameter.PageSize, totalItem, data));
         }
 
         [HttpPost]
@@ -47,6 +65,8 @@ namespace API.Controllers.Agents
 
             return Ok(_mapper.Map<Agent, AgentToReturn>(agent));
         }
+
+       
 
     }
 }
