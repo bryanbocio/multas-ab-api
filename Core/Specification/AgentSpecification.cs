@@ -1,4 +1,5 @@
 ﻿using Core.Entities.Agent;
+using Core.Specification.Parameters.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,18 @@ namespace Core.Specification
     {
 
         public AgentSpecification(string agentIdentity): base(agent=> agent.AgentId==agentIdentity)
+        {
+
+        }
+
+        public AgentSpecification(AgentSpecificationParameter parameters)
+            : base(agent=>
+
+                (string.IsNullOrEmpty(parameters.Search) || agent.Name.ToLower().Contains(parameters.Search))
+                 &&
+                (string.IsNullOrEmpty(parameters.AgentId) || agent.AgentId == parameters.AgentId)
+
+                  )
         {
 
         }
