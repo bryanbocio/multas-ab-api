@@ -4,11 +4,6 @@ using Core.Interfaces.GenericRepository;
 using Infrastructure.Data.Context;
 using Infrastructure.Data.Specification;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.GenericRepository.Repositories
 {
