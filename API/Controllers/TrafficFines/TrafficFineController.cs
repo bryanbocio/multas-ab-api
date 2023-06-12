@@ -64,7 +64,7 @@ namespace API.Controllers.TrafficFines
         {
             if (_unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(trafficFineDto.DriverIdentity)) == null)
             {
-                return BadRequest(new ApiResponse(404, "The driver does not exits"));
+                return BadRequest(new ApiResponse(404, "The driver does not exists"));
             }
 
             var trafficFineCreated=await _trafficFineService.CreateTrafficFine
