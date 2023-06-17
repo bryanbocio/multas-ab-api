@@ -2,6 +2,7 @@
 using API.Helpers;
 using Core.Interfaces.GenericRepository;
 using Core.Interfaces.Services;
+using Core.Interfaces.Tokens;
 using Core.Interfaces.UnitOfWork;
 using Infrastructure.Data.GenericRepository.Repositories;
 using Infrastructure.Data.Repositories.UnitOfWork;
@@ -16,8 +17,9 @@ namespace API.Extensions
         {
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITrafficFineService, TrafficFineService>();
 
 
