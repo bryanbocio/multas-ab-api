@@ -22,6 +22,7 @@ namespace API
             services.AddControllers();
             services.AddDbContext<TrafficDbContext>(options => options.UseSqlite(this._configuracion.GetConnectionString("DefaultConnection")));
 
+            services.AddIdentityServices(_configuracion);
             services.AddApplicationServices(_configuracion);
             services.AddSwaggerDocumentation();
 

@@ -1,4 +1,6 @@
+using Core.Entities.Identity;
 using Infrastructure.Data.Context;
+using Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +20,14 @@ namespace API
                 {
 
                     var trafficDbContext = services.GetRequiredService<TrafficDbContext>();
+                    var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+
                     await trafficDbContext.Database.MigrateAsync();
+                    await identityContext.Database.MigrateAsync();
+
+                    await AppIdentityDbContextSeed.SeedUserAsync(userManager);
+
 
                 }
                 catch (Exception exception)
