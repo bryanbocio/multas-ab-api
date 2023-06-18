@@ -6,6 +6,7 @@ using Core.Entities.Agent;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
 using Core.Specification.Parameters.Driver;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Agents
@@ -23,6 +24,7 @@ namespace API.Controllers.Agents
             
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<Pagination<AgentToReturn>>> GetAgents([FromQuery] AgentSpecificationParameter parameter)
         {
