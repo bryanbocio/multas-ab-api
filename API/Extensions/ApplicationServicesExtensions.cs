@@ -21,7 +21,7 @@ namespace API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITrafficFineService, TrafficFineService>();
-
+            services.AddScoped<IUserService, UserService>();
 
 
             services.Configure<ApiBehaviorOptions>(options =>
