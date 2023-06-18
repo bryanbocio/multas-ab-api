@@ -2,10 +2,15 @@
 using API.Errors;
 using API.Extensions;
 using AutoMapper;
+using Core.Entities.Agent;
+using Core.Entities.Driver;
 using Core.Entities.Identity;
+using Core.Enums;
 using Core.Interfaces.Services;
 using Core.Interfaces.Tokens;
 using Core.Interfaces.UnitOfWork;
+using Core.Specification;
+using Infrastructure.Data.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -52,6 +57,7 @@ namespace API.Controllers.Account
 
         }
 
+        
         [HttpGet("emailexist")]
         public async Task<ActionResult<bool>> CheckEmailExistAsync([FromQuery] string email)
         {
@@ -86,6 +92,17 @@ namespace API.Controllers.Account
                 return new BadRequestObjectResult(new ApiValidationErrorResponse { Errors = new[] { "Email address is in use" } });
             }
 
+            var driver = await _unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(registerDto.IdentityUserId));
+
+            if(driver == null)
+            {
+                var newDriver = UtilDriver.BuildDriverObject(registerDto.IdentityUserId, registerDto.Name, registerDto.LastName, registerDto.PhoneNumber);
+                _unitOfWork.Repository<Driver>().Add(newDriver);
+                var isSaved = await _unitOfWork.Complete();
+
+                if (isSaved <= 0) return BadRequest(new ApiResponse(400, "Problems creating a new account"));
+            }
+
             var user = new AppUser
             {
                 IdentityAppUser = registerDto.IdentityUserId,
@@ -115,6 +132,29 @@ namespace API.Controllers.Account
                 return new BadRequestObjectResult(new ApiValidationErrorResponse { Errors = new[] { "Email address is in use" } });
             }
 
+            var driver = await _unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(registerDto.IdentityUserId));
+
+            if (driver == null)
+            {
+                var newDriver = UtilDriver.BuildDriverObject(registerDto.IdentityUserId, registerDto.Name, registerDto.LastName, registerDto.PhoneNumber);
+                _unitOfWork.Repository<Driver>().Add(newDriver);
+                var isSaved = await _unitOfWork.Complete();
+
+                if (isSaved <= 0) return BadRequest(new ApiResponse(400, "Problems creating a new account"));
+            }
+
+            if (Roles.AGENT.ToString().ToUpper().Equals(registerDto.Role.ToUpper()))
+            {
+                var agent = await _unitOfWork.Repository<Agent>().GetEntityWithSpecification(new AgentSpecification(registerDto.IdentityUserId));
+                if(agent == null)
+                {
+                    var newAgent = UtilsAgent.BuildAgentObject(registerDto.IdentityUserId, registerDto.Name, registerDto.LastName, registerDto.PhoneNumber);
+                    _unitOfWork.Repository<Agent>().Add(newAgent);
+                    var isSaved = await _unitOfWork.Complete();
+                    if (isSaved <= 0) return BadRequest(new ApiResponse(400, "Problems creating a new account"));
+                }
+            }
+
             var user = new AppUser
             {
                 IdentityAppUser = registerDto.IdentityUserId,
@@ -134,5 +174,6 @@ namespace API.Controllers.Account
                 Token = await _tokeService.CreateToken(user),
             };
         }
+
     }
 }
