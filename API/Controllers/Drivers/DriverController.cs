@@ -7,6 +7,7 @@ using Core.Interfaces.GenericRepository;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
 using Core.Specification.Parameters.Driver;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Drivers
@@ -24,6 +25,7 @@ namespace API.Controllers.Drivers
 
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN, AGENT")]
         public async Task<ActionResult<Pagination<DriverToReturnDto>>> GetDrivers([FromQuery] DriverSpecificationParameters parameter)
         {
             var specifications = new DriverSpecification(parameter);
@@ -56,6 +58,7 @@ namespace API.Controllers.Drivers
 
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN, AGENT")]
         public async Task<ActionResult<DriverToReturnDto>> GetDriver(string id)
         {
             var specification = new DriverSpecification(id);

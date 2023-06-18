@@ -8,11 +8,13 @@ using Core.Interfaces.Services;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
 using Core.Specification.Parameters.TrafficFine;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.TrafficFines
 {
    
+    [Authorize(Roles ="AGENT")]
     public class TrafficFineController : BaseController
     {
 
