@@ -9,6 +9,6 @@ namespace Core.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<bool> CreateUserAsync(AppUser user, string password, string rol);
+        Task<bool> CreateUserAsync(AppUser user, string password, string rol=null);
     }
 }
