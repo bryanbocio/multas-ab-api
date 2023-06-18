@@ -111,7 +111,7 @@ namespace API.Controllers.Account
             };
 
 
-            var result = await _userService.CreateUserAsync(user,registerDto.Password,registerDto.Role);
+            var result = await _userService.CreateUserAsync(user,registerDto.Password);
 
             if (!result) return BadRequest(new ApiResponse(400));
 
@@ -125,7 +125,7 @@ namespace API.Controllers.Account
 
         [Authorize(Roles="ADMIN")]
         [HttpPost("registerbyadmin")]
-        public async Task<ActionResult<UserDto>> RegisterUserByAdmin(RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> RegisterUserByAdmin(RegisterForAdminDto registerDto)
         {
             if (CheckEmailExistAsync(registerDto.Email).Result.Value)
             {
