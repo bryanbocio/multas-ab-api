@@ -20,13 +20,14 @@ namespace API
                 {
 
                     var trafficDbContext = services.GetRequiredService<TrafficDbContext>();
-                    var identityContext = services.GetRequiredService<AppIdentityDbContext>();
-                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                    var identityContext  = services.GetRequiredService<AppIdentityDbContext>();
+                    var userManager      = services.GetRequiredService<UserManager<AppUser>>();
+                    var roleManager      = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                     await trafficDbContext.Database.MigrateAsync();
                     await identityContext.Database.MigrateAsync();
 
-                    await AppIdentityDbContextSeed.SeedUserAsync(userManager);
+                    await AppIdentityDbContextSeed.SeedUserAsync(userManager,roleManager);
 
 
                 }
