@@ -43,7 +43,7 @@ namespace Infrastructure.Data.Services
             {
                 foreach (var role in rolesAvalibles)
                 {
-                    if (role.Equals(rolToAsing))
+                    if (role.ToString().ToUpper().Equals(rolToAsing.ToUpper()))
                     {
                         await _userManager.AddToRoleAsync(appUser, role.ToString());
                     }
