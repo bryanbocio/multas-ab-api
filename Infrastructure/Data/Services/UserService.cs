@@ -15,16 +15,12 @@ namespace Infrastructure.Data.Services
     {
 
         private readonly UserManager<AppUser> _userManager;
-        private readonly IUnitOfWork _unitOfWork;
-        public UserService(UserManager<AppUser> userManager, IUnitOfWork unitOfWork)
+        public UserService(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
-            _unitOfWork = unitOfWork;
         }
         public async  Task<bool> CreateUserAsync(AppUser user, string password, string rol)
         {
-
-
             var userCreated = await _userManager.CreateAsync(user, password);
 
             var rolesAvalibles = Enum.GetValues(typeof(Roles));
