@@ -38,7 +38,7 @@ namespace API.Controllers.Account
             {
                 Email = user.Email,
                 IdentityUserId = user.IdentityAppUser,
-                Token = _tokeService.CreateToken(user),
+                Token = await _tokeService.CreateToken(user),
             };
 
         }
@@ -64,7 +64,7 @@ namespace API.Controllers.Account
             {
                 Email = user.Email,
                 IdentityUserId = user.IdentityAppUser,
-                Token = _tokeService.CreateToken(user),
+                Token =await _tokeService.CreateToken(user),
             };
         }
 
@@ -92,7 +92,7 @@ namespace API.Controllers.Account
             {
                 Email = user.Email,
                 IdentityUserId = user.IdentityAppUser,
-                Token = _tokeService.CreateToken(user),
+                Token = await _tokeService.CreateToken(user),
             };
         }
 
