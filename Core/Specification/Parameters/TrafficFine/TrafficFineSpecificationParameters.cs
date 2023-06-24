@@ -16,8 +16,10 @@ namespace Core.Specification.Parameters.TrafficFine
 
         public int? AgentId { get; set; }
         public int? DriverId { get; set; }
-
         public int? TrafficFineId { get; set; }
+
+        public string? IdentityDriver { get; set; }
+        public string? IdentityAgent{ get; set; }
         public string? Sort { get; set; }
 
         private string _search;
