@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Agents
 {
+    [Authorize(Roles = "ADMIN")]
     public class AgentController : BaseController
     {
 
@@ -24,7 +25,6 @@ namespace API.Controllers.Agents
             
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<Pagination<AgentToReturn>>> GetAgents([FromQuery] AgentSpecificationParameter parameter)
         {
@@ -41,6 +41,7 @@ namespace API.Controllers.Agents
             return Ok(new Pagination<AgentToReturn>(parameter.PageIndex, parameter.PageSize, totalItem, data));
         }
 
+        
         [HttpPost]
         public async Task<ActionResult> CreateAgent(AgentDto agent)
         {
@@ -57,7 +58,7 @@ namespace API.Controllers.Agents
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<AgentToReturn>> GetDriver(string id)
+        public async Task<ActionResult<AgentToReturn>> GetAgent(string id)
         {
             var specification = new AgentSpecification(id);
 

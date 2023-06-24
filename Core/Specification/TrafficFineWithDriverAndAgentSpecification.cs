@@ -19,6 +19,8 @@ namespace Core.Specification
                 (!parameters.DriverId.HasValue || fine.DriverId == parameters.DriverId)
                 &&
                 (!parameters.AgentId.HasValue || fine.AgentId == parameters.AgentId)
+                 &&
+                (!parameters.TrafficFineId.HasValue || fine.Id == parameters.TrafficFineId)
                 )
 
         {

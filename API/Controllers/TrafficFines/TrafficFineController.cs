@@ -8,6 +8,7 @@ using Core.Interfaces.Services;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
 using Core.Specification.Parameters.TrafficFine;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.TrafficFines
@@ -28,12 +29,13 @@ namespace API.Controllers.TrafficFines
         }
 
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<Pagination<TrafficFineToReturnDto>>> GetTrafficFines([FromQuery] TrafficFineSpecificationParameters parameters)
         {
             var specifications = new TrafficFineWithDriverAndAgentSpecification(parameters);
 
-            var countSpecification= new TrafficFineWithFiltersForCountingSpecification(parameters);
+            var countSpecification= specifications;
             
             var totalItems = await _unitOfWork.Repository<TrafficFine>().CountAsync(countSpecification);
             
@@ -44,21 +46,45 @@ namespace API.Controllers.TrafficFines
             return Ok(new Pagination<TrafficFineToReturnDto>(parameters.PageIndex, parameters.PageSize, totalItems, data));
         }
 
-        
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<TrafficFine>> GetTrafficFine(int id)
         {
-            var trafficFine = await _unitOfWork.Repository<TrafficFine>().GetByIdAsync(id);
+
+            var parameter = new TrafficFineSpecificationParameters { TrafficFineId = id };
+            var specifications = new TrafficFineWithDriverAndAgentSpecification(parameter); 
+            var trafficFine = await _unitOfWork.Repository<TrafficFine>().GetEntityWithSpecification(specifications);
 
             if(Object.Equals(trafficFine, null)) return NotFound(new ApiResponse(404));
 
             return Ok(trafficFine);
         }
 
+        [Authorize]
+        [HttpGet("by-driver/{identityDriver}")]
+        public async Task<ActionResult<TrafficFineToReturnDto>> GetTrafficFineByIdentityDriver(string identityDriver)
+        {
+            var driver = _unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(identityDriver));
+
+            if (driver == null) return NotFound(new ApiResponse(404));
+
+            var parameter = new TrafficFineSpecificationParameters {DriverId= driver.Id};
+
+            var specification = new TrafficFineWithDriverAndAgentSpecification(parameter);
+            var trafficFine=await _unitOfWork.Repository<TrafficFine>().GetEntityWithSpecification(specification);
+
+            if (trafficFine == null) return BadRequest(new ApiResponse(404));
+
+            return Ok(_mapper.Map<TrafficFine, TrafficFineToReturnDto>(trafficFine));
+
+        }
 
 
+
+
+        [Authorize(Roles ="ADMIN, AGENT")]
         [HttpPost]
         public async Task<ActionResult<TrafficFine>> CreateTrafficFine(TrafficFineDto trafficFineDto)
         {
