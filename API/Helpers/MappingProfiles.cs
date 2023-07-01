@@ -1,6 +1,7 @@
 ﻿using API.DTOs;
 using AutoMapper;
 using Core.Entities.Agent;
+using Core.Entities.Basket;
 using Core.Entities.Driver;
 using Core.Entities.TrafficFine;
 
@@ -40,6 +41,10 @@ namespace API.Helpers
             CreateMap<AgentDto, Agent>()
                                .ForMember(agent => agent.AgentId, options => options.MapFrom(driverDto => driverDto.AgentIdentity))
                                .ForMember(agent => agent.Number, option => option.MapFrom(driverDto => driverDto.PhoneNumber));
+
+
+            CreateMap<CustomerBasketDto, CustomerBasket>();
+            CreateMap<BasketItemsDto, BasketItems>();
         }
     }
 }
