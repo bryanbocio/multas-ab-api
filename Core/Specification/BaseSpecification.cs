@@ -1,4 +1,4 @@
-﻿using Core.Interfaces;
+﻿using Core.Interfaces.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq;

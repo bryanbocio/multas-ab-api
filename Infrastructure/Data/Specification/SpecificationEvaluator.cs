@@ -1,5 +1,5 @@
 ﻿using Core.Entities;
-using Core.Interfaces;
+using Core.Interfaces.Specification;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

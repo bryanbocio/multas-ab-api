@@ -1,13 +1,16 @@
 ﻿using API.Errors;
 using API.Helpers;
 using Core.Interfaces.GenericRepository;
+using Core.Interfaces.Reporitories.BasketRepository;
 using Core.Interfaces.Services;
 using Core.Interfaces.Tokens;
 using Core.Interfaces.UnitOfWork;
-using Infrastructure.Data.GenericRepository.Repositories;
+using Infrastructure.Data.Repositories.Basket;
+using Infrastructure.Data.Repositories.GenericRepository;
 using Infrastructure.Data.Repositories.UnitOfWork;
 using Infrastructure.Data.Services;
 using Microsoft.AspNetCore.Mvc;
+using StackExchange.Redis;
 
 namespace API.Extensions
 {
@@ -19,9 +22,18 @@ namespace API.Extensions
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));
 
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITrafficFineService, TrafficFineService>();
             services.AddScoped<IUserService, UserService>();
+
+
+            services.AddSingleton<IConnectionMultiplexer>(config =>
+            {
+                var options = ConfigurationOptions.Parse(configuracion.GetConnectionString("Redis"));
+                return ConnectionMultiplexer.Connect(options);
+            });
 
 
             services.Configure<ApiBehaviorOptions>(options =>

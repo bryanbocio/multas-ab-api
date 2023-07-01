@@ -2,7 +2,7 @@
 using Core.Interfaces.GenericRepository;
 using Core.Interfaces.UnitOfWork;
 using Infrastructure.Data.Context;
-using Infrastructure.Data.GenericRepository.Repositories;
+using Infrastructure.Data.Repositories.GenericRepository;
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -1,5 +1,4 @@
-﻿
-namespace Core.Specification.Parameters.Driver
+﻿namespace Core.Specification.Parameters.Agent
 {
     public class AgentSpecificationParameter
     {
@@ -11,7 +10,7 @@ namespace Core.Specification.Parameters.Driver
         public int PageSize
         {
             get => _pagSize;
-            set => _pagSize = (value > MaxPageSize) ? MaxPageSize : value;
+            set => _pagSize = value > MaxPageSize ? MaxPageSize : value;
         }
 
         public string? AgentId { get; set; }

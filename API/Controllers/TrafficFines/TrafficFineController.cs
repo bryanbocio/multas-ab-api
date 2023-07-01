@@ -2,6 +2,7 @@
 using API.Errors;
 using API.Helpers;
 using AutoMapper;
+using Core.Entities.Agent;
 using Core.Entities.Driver;
 using Core.Entities.TrafficFine;
 using Core.Interfaces.Services;
@@ -33,6 +34,21 @@ namespace API.Controllers.TrafficFines
         [HttpGet]
         public async Task<ActionResult<Pagination<TrafficFineToReturnDto>>> GetTrafficFines([FromQuery] TrafficFineSpecificationParameters parameters)
         {
+
+            if(parameters.IdentityDriver != null)
+            {
+                var driver = await _unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(parameters.IdentityDriver));
+                if (driver == null) return BadRequest(new ApiResponse(404));
+                parameters.DriverId = driver.Id;
+            }
+
+            if (parameters.IdentityAgent != null)
+            {
+                var agent = await _unitOfWork.Repository<Agent>().GetEntityWithSpecification(new AgentSpecification(parameters.IdentityAgent));
+                if (agent == null) return BadRequest(new ApiResponse(404));
+                parameters.AgentId = agent.Id;
+            }
+
             var specifications = new TrafficFineWithDriverAndAgentSpecification(parameters);
 
             var countSpecification= specifications;
@@ -62,24 +78,7 @@ namespace API.Controllers.TrafficFines
             return Ok(trafficFine);
         }
 
-        [Authorize]
-        [HttpGet("by-driver/{identityDriver}")]
-        public async Task<ActionResult<TrafficFineToReturnDto>> GetTrafficFineByIdentityDriver(string identityDriver)
-        {
-            var driver = _unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(identityDriver));
-
-            if (driver == null) return NotFound(new ApiResponse(404));
-
-            var parameter = new TrafficFineSpecificationParameters {DriverId= driver.Id};
-
-            var specification = new TrafficFineWithDriverAndAgentSpecification(parameter);
-            var trafficFine=await _unitOfWork.Repository<TrafficFine>().GetEntityWithSpecification(specification);
-
-            if (trafficFine == null) return BadRequest(new ApiResponse(404));
-
-            return Ok(_mapper.Map<TrafficFine, TrafficFineToReturnDto>(trafficFine));
-
-        }
+        
 
 
 
