@@ -1,11 +1,11 @@
 ﻿using Core.Entities;
-using Core.Interfaces;
 using Core.Interfaces.GenericRepository;
+using Core.Interfaces.Specification;
 using Infrastructure.Data.Context;
 using Infrastructure.Data.Specification;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data.GenericRepository.Repositories
+namespace Infrastructure.Data.Repositories.GenericRepository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
@@ -14,7 +14,7 @@ namespace Infrastructure.Data.GenericRepository.Repositories
 
         public GenericRepository(TrafficDbContext dbContext)
         {
-            _dbContext= dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
