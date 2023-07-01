@@ -78,11 +78,6 @@ namespace API.Controllers.TrafficFines
             return Ok(trafficFine);
         }
 
-        
-
-
-
-
         [Authorize(Roles ="ADMIN, AGENT")]
         [HttpPost]
         public async Task<ActionResult<TrafficFine>> CreateTrafficFine(TrafficFineDto trafficFineDto)
@@ -109,9 +104,28 @@ namespace API.Controllers.TrafficFines
             return Ok(trafficFineCreated);
         }
 
+        [HttpGet("reasons")]
+        public ActionResult<List<TrafficFineReasonDto>> GetTrafficFinesReasons()
+        {
+            List<TrafficFineReasonDto> lstReason = new List<TrafficFineReasonDto>();
+
+            if(lstReason.Count <= 0)
+            {
+                TrafficFineReasonDto trafficFineReason1 = new TrafficFineReasonDto { Id = 1, Reason = "Pasó semáforo en rojo", Price = 100 };
+                TrafficFineReasonDto trafficFineReason2 = new TrafficFineReasonDto { Id = 1, Reason = "Falta de respeto autoridad de tráncito", Price = 700 };
+                TrafficFineReasonDto trafficFineReason3 = new TrafficFineReasonDto { Id = 1, Reason = "Dobló en U donde no debía", Price = 400 };
+                TrafficFineReasonDto trafficFineReason4 = new TrafficFineReasonDto { Id = 1, Reason = "No respetó la señal de pare", Price = 400 };
+
+                lstReason.Add(trafficFineReason1);
+                lstReason.Add(trafficFineReason2);
+                lstReason.Add(trafficFineReason3);
+                lstReason.Add(trafficFineReason4);
+            }
+
+            return Ok(lstReason) ;
+        }
 
 
-        
 
     }
 }
