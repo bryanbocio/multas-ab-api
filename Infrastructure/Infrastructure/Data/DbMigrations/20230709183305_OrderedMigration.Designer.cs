@@ -3,16 +3,18 @@ using System;
 using Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Data.DbMigration
+namespace Infrastructure.Infrastructure.Data.DbMigrations
 {
     [DbContext(typeof(TrafficDbContext))]
-    partial class TrafficDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230709183305_OrderedMigration")]
+    partial class OrderedMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
