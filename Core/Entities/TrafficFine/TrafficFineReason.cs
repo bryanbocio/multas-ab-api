@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.TrafficFine
 {
-    public class TrafficFineReason
+    public class TrafficFineReason : BaseEntity
     {
-        public int Id { get; set; }
         public string Reason { get; set; }
         public decimal Price { get; set; }
 
