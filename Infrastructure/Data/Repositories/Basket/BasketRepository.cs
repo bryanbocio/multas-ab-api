@@ -30,10 +30,12 @@ namespace Infrastructure.Data.Repositories.Basket
         {
             var oldBasketItems= await GetBasketAsync(basket.Id);
 
-            foreach(var item in basket.Items){
+           if(oldBasketItems is null) return basket;   
+
+            foreach (var item in basket.Items)
+            {
                 oldBasketItems.Items.Add(item);
             }
-            
 
             var created = await _database.StringSetAsync(basket.Id, JsonSerializer.Serialize(value: oldBasketItems), TimeSpan.FromDays(30));
 
