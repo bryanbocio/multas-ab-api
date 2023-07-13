@@ -30,16 +30,27 @@ namespace Infrastructure.Data.Repositories.Basket
         {
             var oldBasketItems= await GetBasketAsync(basket.Id);
 
-           if(oldBasketItems is null) return basket;   
+           if(oldBasketItems is null) {
+                
+                var isCreatedNewBasket= await CreateBasket(basket);
+                
+                return !isCreatedNewBasket ? null : await GetBasketAsync(basket.Id);
+           };   
 
             foreach (var item in basket.Items)
             {
                 oldBasketItems.Items.Add(item);
             }
 
-            var created = await _database.StringSetAsync(basket.Id, JsonSerializer.Serialize(value: oldBasketItems), TimeSpan.FromDays(30));
+            var created = await CreateBasket(oldBasketItems) ;
 
-            return !created ? null : await GetBasketAsync(basket.Id);
+            return !created ? null : await GetBasketAsync(oldBasketItems.Id);
+        }
+
+
+
+        private async Task<bool> CreateBasket(CustomerBasket basket){
+            return await _database.StringSetAsync(basket.Id, JsonSerializer.Serialize(value: basket), TimeSpan.FromDays(30));
         }
     }
 }
