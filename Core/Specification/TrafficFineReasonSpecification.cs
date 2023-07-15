@@ -10,7 +10,11 @@ namespace Core.Specification
     public class TrafficFineReasonSpecification : BaseSpecification<TrafficFineReason>
     {
 
-        public TrafficFineReasonSpecification(string reasonDescription) : base(reason=> reason.Reason==reasonDescription)
+        public TrafficFineReasonSpecification(string reasonDescription) : base(reason=>
+            
+            (string.IsNullOrEmpty(reasonDescription) || reason.Reason.ToUpper().Contains(reasonDescription)) 
+
+            )
         {
 
         }

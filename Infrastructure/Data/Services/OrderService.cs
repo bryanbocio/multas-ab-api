@@ -37,7 +37,9 @@ namespace Infrastructure.Data.Services
 
                 var trafficFineOrdered = new TrafficFineItemOrdered(trafficFine.Id, trafficFine.Reason);
 
-                var reason = await _unitOfWork.Repository<TrafficFineReason>().GetEntityWithSpecification(new TrafficFineReasonSpecification(trafficFine.Reason));
+                string codeReason = GetReasonCode(trafficFine.Reason);
+
+                var reason = await _unitOfWork.Repository<TrafficFineReason>().GetEntityWithSpecification(new TrafficFineReasonSpecification(codeReason));
                 
                 var orderItem = new OrderItem(trafficFineOrdered, reason.Price);
 
@@ -57,6 +59,11 @@ namespace Infrastructure.Data.Services
             await _basketRepository.DeleteBasketAsync(basketId);
 
             return order;
+        }
+
+        private string GetReasonCode(string description)
+        {
+            return description.Substring(0, 3);
         }
 
         public Task<Order> GetOrderByIdAsync(int id, string driverId)
