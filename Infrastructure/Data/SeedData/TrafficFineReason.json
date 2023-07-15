@@ -1,0 +1,23 @@
+[
+  {
+    "Id": 1,
+    "Reason": "AA1 Pasó semáforo en rojo",
+    "Price": 100
+  },
+  {
+    "Id": 2,
+    "Reason": "AA2 Falta de respeto autoridad de tráncito",
+    "Price": 2000
+  },
+  {
+   
+    "Id": 3,
+    "Reason": "AA3 Dobló en U donde no debía",
+    "Price": 800
+  },
+  {
+    "Id": 4,
+    "Reason": "AA4 No respetó una señal de PARE",
+    "Price": 700
+  }
+]
