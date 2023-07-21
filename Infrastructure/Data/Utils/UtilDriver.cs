@@ -10,7 +10,10 @@ namespace Infrastructure.Data.Utils
     public class UtilDriver
     {
 
+        private UtilDriver()
+        {
 
+        }
         public static Driver BuildDriverObject(string driverIdentity,string name, string lastName, string phoneNumber)
         {
 

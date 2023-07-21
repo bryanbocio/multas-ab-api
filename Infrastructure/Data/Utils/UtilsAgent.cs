@@ -9,6 +9,10 @@ namespace Infrastructure.Data.Utils
 {
     public class UtilsAgent
     {
+        private UtilsAgent()
+        {
+
+        }
         public static Agent BuildAgentObject(string agentIdentity, string name, string lastName, string phoneNumber)
         {
             return new Agent
