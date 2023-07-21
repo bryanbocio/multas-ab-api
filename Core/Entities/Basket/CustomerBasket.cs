@@ -18,5 +18,8 @@ namespace Core.Entities.Basket
 
         public string Id { get; set; }
         public List<BasketItems> Items { get; set; } = new List<BasketItems>();
+
+        public string ClientSecret { get; set; }
+        public string PaymentIntentId { get; set; }
     }
 }
