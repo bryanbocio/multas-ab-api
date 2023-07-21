@@ -13,6 +13,7 @@
         public string Longitude { get; set; }
         public DateTime DateCreated { get; set; }
         public string AgentIdentity { get; set; }
+        public string Status { get; set; }
 
     }
 }

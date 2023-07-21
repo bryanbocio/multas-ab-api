@@ -21,6 +21,7 @@ namespace API.Controllers.TrafficFines
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITrafficFineService _trafficFineService;
         private readonly IMapper _mapper;
+        private static IList<TrafficFineReason> trafficFineReasonsCache= new List<TrafficFineReason>();
 
         public TrafficFineController(IMapper mapper,IUnitOfWork unitOfWork, ITrafficFineService trafficFineService)
         {
@@ -105,27 +106,39 @@ namespace API.Controllers.TrafficFines
         }
 
         [HttpGet("reasons")]
-        public ActionResult<List<TrafficFineReasonDto>> GetTrafficFinesReasons()
+        public async Task<IList<TrafficFineReason>> GetTrafficFinesReasons()
         {
-            List<TrafficFineReasonDto> lstReason = new List<TrafficFineReasonDto>();
+           
 
-            if(lstReason.Count <= 0)
+            if (!trafficFineReasonsCache.Any())
             {
-                TrafficFineReasonDto trafficFineReason1 = new TrafficFineReasonDto { Id = 1, Reason = "Pasó semáforo en rojo", Price = 100 };
-                TrafficFineReasonDto trafficFineReason2 = new TrafficFineReasonDto { Id = 1, Reason = "Falta de respeto autoridad de tráncito", Price = 700 };
-                TrafficFineReasonDto trafficFineReason3 = new TrafficFineReasonDto { Id = 1, Reason = "Dobló en U donde no debía", Price = 400 };
-                TrafficFineReasonDto trafficFineReason4 = new TrafficFineReasonDto { Id = 1, Reason = "No respetó la señal de pare", Price = 400 };
-
-                lstReason.Add(trafficFineReason1);
-                lstReason.Add(trafficFineReason2);
-                lstReason.Add(trafficFineReason3);
-                lstReason.Add(trafficFineReason4);
+                var reasons = await _unitOfWork.Repository<TrafficFineReason>().GetAllAsync();
+                foreach (var reason in reasons)
+                {
+                    trafficFineReasonsCache.Add(reason);
+                }
             }
 
-            return Ok(lstReason) ;
+            return trafficFineReasonsCache;
         }
 
 
+
+        [HttpPost("payment/{trafficFineId}")]
+        [Authorize]
+        public async Task<ActionResult> ChangePaymentStatusToPaid(int trafficFineId)
+        {
+            try
+            {
+                await _trafficFineService.SwitchThePaymentStatusToATrafficFineAlreadyPaid(trafficFineId);
+
+            }catch (Exception ex)
+            {
+                throw;
+            }
+
+            return Ok(new ApiResponse(200, "Has been paid suceesfull"));
+        }
 
     }
 }

@@ -4,6 +4,7 @@ using Core.Interfaces.Reporitories.BasketRepository;
 using Core.Interfaces.Services;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
+using Infrastructure.Data.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace Infrastructure.Data.Services
 
                 var trafficFineOrdered = new TrafficFineItemOrdered(trafficFine.Id, trafficFine.Reason);
 
-                string codeReason = GetReasonCode(trafficFine.Reason);
+                string codeReason = UtilsTrafficFineReasons.GetReasonCode(trafficFine.Reason);
 
                 var reason = await _unitOfWork.Repository<TrafficFineReason>().GetEntityWithSpecification(new TrafficFineReasonSpecification(codeReason));
                 
@@ -59,11 +60,6 @@ namespace Infrastructure.Data.Services
             await _basketRepository.DeleteBasketAsync(basketId);
 
             return order;
-        }
-
-        private string GetReasonCode(string description)
-        {
-            return description.Substring(0, 3);
         }
 
         public Task<Order> GetOrderByIdAsync(int id, string driverId)
