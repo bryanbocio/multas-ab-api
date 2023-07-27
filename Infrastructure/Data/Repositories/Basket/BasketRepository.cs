@@ -37,10 +37,18 @@ namespace Infrastructure.Data.Repositories.Basket
                 return !isCreatedNewBasket ? null : await GetBasketAsync(basket.Id);
            };   
 
-            foreach (var item in basket.Items)
+           
+            if(basket.Items.Count() != oldBasketItems.Items.Count())
             {
-                oldBasketItems.Items.Add(item);
+                foreach (var item in basket.Items)
+                {
+                    oldBasketItems.Items.Add(item);
+                }
             }
+           
+
+            oldBasketItems.ClientSecret = basket.ClientSecret;     
+            oldBasketItems.PaymentIntentId= basket.PaymentIntentId;
 
             var created = await CreateBasket(oldBasketItems) ;
 
