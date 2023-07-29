@@ -122,23 +122,5 @@ namespace API.Controllers.TrafficFines
             return trafficFineReasonsCache;
         }
 
-
-
-        [HttpPost("payment/{trafficFineId}")]
-        [Authorize]
-        public async Task<ActionResult> ChangePaymentStatusToPaid(int trafficFineId)
-        {
-            try
-            {
-                await _trafficFineService.SwitchThePaymentStatusToATrafficFineAlreadyPaid(trafficFineId);
-
-            }catch (Exception ex)
-            {
-                throw;
-            }
-
-            return Ok(new ApiResponse(200, "Has been paid suceesfull"));
-        }
-
     }
 }
