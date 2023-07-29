@@ -1,15 +1,11 @@
 ﻿using Core.Entities.OrderAgregate;
 using Core.Entities.TrafficFine;
+using Core.Enums;
 using Core.Interfaces.Reporitories.BasketRepository;
 using Core.Interfaces.Services;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
 using Infrastructure.Data.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Services
 {
@@ -35,6 +31,10 @@ namespace Infrastructure.Data.Services
             foreach(var item in basket.Items)
             {
                 var trafficFine= await _unitOfWork.Repository<TrafficFine>().GetByIdAsync(item.TrafficFineId);
+
+                trafficFine.Status = PaymentStatus.PENDIENTE.ToString();
+
+                _unitOfWork.Repository<TrafficFine>().Update(trafficFine);
 
                 var trafficFineOrdered = new TrafficFineItemOrdered(trafficFine.Id, trafficFine.Reason);
 
