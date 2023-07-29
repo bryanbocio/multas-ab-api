@@ -8,7 +8,7 @@ namespace Core.Enums
 {
     public enum PaymentStatus
     {
-        PENTIENDE,
+        PENDIENTE,
         PAGADO
     }
 }
