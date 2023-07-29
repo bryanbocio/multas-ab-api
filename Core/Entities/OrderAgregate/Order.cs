@@ -22,7 +22,7 @@ namespace Core.Entities.OrderAgregate
         public DateTime OrderDate { get; set; }= DateTime.UtcNow;
         public IReadOnlyList<OrderItem> OrderItems { get; set; }
         public decimal SubTotal { get; set; }
-        public OrderStatus Status { get; set; } = OrderStatus.Pending;
+        public OrderStatus Status { get; set; } = OrderStatus.PaymentRecevied;
         public string? PaymentIntentId { get; set; }
 
     }
