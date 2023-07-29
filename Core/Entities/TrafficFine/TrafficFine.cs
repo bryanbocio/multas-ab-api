@@ -14,7 +14,7 @@ namespace Core.Entities.TrafficFine
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public DateTime DateCreated { get; }= DateTime.Now;
-        public string Status { get; set; } = PaymentStatus.PENTIENDE.ToString();
+        public string Status { get; set; } = PaymentStatus.PENDIENTE.ToString();
 
 
         public TrafficFine()
