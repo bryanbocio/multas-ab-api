@@ -66,7 +66,7 @@ namespace Infrastructure.Data.Services
                 await service.UpdateAsync(basket.PaymentIntentId, options);
             }
 
-            await _basketRepository.UpdateBasketAsync(basket);
+            await _basketRepository.UpdatedClientSecretAndPaymentIntent(basket);
 
             return basket;
 

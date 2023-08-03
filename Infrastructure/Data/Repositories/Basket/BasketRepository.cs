@@ -38,13 +38,10 @@ namespace Infrastructure.Data.Repositories.Basket
            };   
 
            
-            if(basket.Items.Count() != oldBasketItems.Items.Count())
-            {
                 foreach (var item in basket.Items)
                 {
                     oldBasketItems.Items.Add(item);
                 }
-            }
            
 
             oldBasketItems.ClientSecret = basket.ClientSecret;     
@@ -53,6 +50,13 @@ namespace Infrastructure.Data.Repositories.Basket
             var created = await CreateBasket(oldBasketItems) ;
 
             return !created ? null : await GetBasketAsync(oldBasketItems.Id);
+        }
+
+        public async Task<CustomerBasket> UpdatedClientSecretAndPaymentIntent(CustomerBasket basket)
+        {
+            var created = await CreateBasket(basket);
+
+            return !created ? null : await GetBasketAsync(basket.Id);
         }
 
 
