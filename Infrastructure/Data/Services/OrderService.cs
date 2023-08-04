@@ -32,7 +32,7 @@ namespace Infrastructure.Data.Services
             {
                 var trafficFine= await _unitOfWork.Repository<TrafficFine>().GetByIdAsync(item.TrafficFineId);
 
-                trafficFine.Status = PaymentStatus.PENDIENTE.ToString();
+                trafficFine.Status = PaymentStatus.PAGADO.ToString();
 
                 _unitOfWork.Repository<TrafficFine>().Update(trafficFine);
 
