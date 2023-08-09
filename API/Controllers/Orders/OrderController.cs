@@ -22,13 +22,13 @@ namespace API.Controllers.Orders
 
 
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder(OrderDto orderDto)
+        public async Task<ActionResult<List<TrafficFineDto>>> CreateOrder(OrderDto orderDto)
         {
-            var order = await _orderService.CreateOrder(orderDto.DriverIdentity, orderDto.BasketId);
+            var lstTrafficFine = await _orderService.CreateOrder(orderDto.DriverIdentity, orderDto.BasketId);
 
-            if (order == null) return BadRequest(new ApiResponse(400, "Problem Creating order"));
+            if (lstTrafficFine == null) return BadRequest(new ApiResponse(400, "Problem Creating order"));
 
-            return Ok(order);
+            return Ok(lstTrafficFine);
         }
 
 

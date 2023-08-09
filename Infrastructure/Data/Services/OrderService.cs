@@ -21,12 +21,14 @@ namespace Infrastructure.Data.Services
             _basketRepository = basketRepository;
         }
 
-        public async Task<Order> CreateOrder(string driverId, string basketId)
+        public async Task<List<TrafficFine>> CreateOrder(string driverId, string basketId)
         {
 
             var basket = await _basketRepository.GetBasketAsync(basketId);
 
             var itemList = new List<OrderItem>();
+
+            var listTrafficFineToSend = new List<TrafficFine>();
 
             foreach(var item in basket.Items)
             {
@@ -44,6 +46,8 @@ namespace Infrastructure.Data.Services
                 
                 var orderItem = new OrderItem(trafficFineOrdered, reason.Price);
 
+                listTrafficFineToSend.Add(trafficFine);
+
                 itemList.Add(orderItem);
             }
 
@@ -59,7 +63,7 @@ namespace Infrastructure.Data.Services
 
             await _basketRepository.DeleteBasketAsync(basketId);
 
-            return order;
+            return listTrafficFineToSend;
         }
 
         public Task<Order> GetOrderByIdAsync(int id, string driverId)

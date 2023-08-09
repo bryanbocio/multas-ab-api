@@ -10,7 +10,7 @@ namespace Core.Interfaces.Services
 {
     public interface IOrderService
     {
-        Task<Order> CreateOrder(string driverId, string basketId);
+        Task<List<TrafficFine>> CreateOrder(string driverId, string basketId);
 
         Task<IReadOnlyList<Order>> GetOrderForUserAsync(string driverId);
 
