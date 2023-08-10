@@ -1,23 +1,43 @@
 [
   {
     "Id": 1,
-    "Reason": "AA1 Pasó semáforo en rojo",
+    "Reason": "AA1 Pas semï¿½foro en rojo",
     "Price": 100
   },
   {
     "Id": 2,
-    "Reason": "AA2 Falta de respeto autoridad de tráncito",
+    "Reason": "AA2 Falta de respeto autoridad de trï¿½ncito",
     "Price": 2000
   },
   {
    
     "Id": 3,
-    "Reason": "AA3 Dobló en U donde no debía",
+    "Reason": "AA3 Doblï¿½ en U donde no debï¿½a",
     "Price": 800
   },
   {
     "Id": 4,
-    "Reason": "AA4 No respetó una señal de PARE",
+    "Reason": "AA4 No respetï¿½ una seï¿½al de PARE",
+    "Price": 700
+  },
+  {
+    "Id": 5,
+    "Reason": "AA5 Placa de automovil vencida",
+    "Price": 700
+  },
+  {
+    "Id": 6,
+    "Reason": "AA6 VehÃ­culo circulando sin marbete",
+    "Price": 700
+  },
+  {
+    "Id": 7,
+    "Reason": "AA6 VehÃ­culo con luces intermitentes no funcionales circulando",
+    "Price": 700
+  },
+  {
+    "Id": 8,
+    "Reason": "Motorista circulando sin casco de protecciÃ³n",
     "Price": 700
   }
 ]
