@@ -1,4 +1,6 @@
 ﻿using Core.Entities.TrafficFine;
+using Core.Entities.Agent;
+using Core.Entities.Driver;
 using Infrastructure.Data.Context;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -12,7 +14,8 @@ namespace Infrastructure.Data
             try
             {
                 await SeedTrafficFineReasonsAsync(context);
-
+                await SeedAgentAsync(context);
+                await SeedDriverAsync(context);
                 if (context.ChangeTracker.HasChanges()) await context.SaveChangesAsync();
 
             }
@@ -35,6 +38,27 @@ namespace Infrastructure.Data
                 {
                     context.TrafficFineReasons.AddRange(reasons);
                 }
+            }
+        }
+
+         private static async Task SeedAgentAsync(TrafficDbContext context)
+        {
+            if (!context.Agent.Any())
+            {
+
+                var agent = new Agent(){Id=1, AgentId="302111172990",Name="Jose", LastName="Martinez", Number="8290009875"}; 
+
+                    context.Agent.AddRange(agent);
+            }
+        }
+
+        private static async Task SeedDriverAsync(TrafficDbContext context)
+        {
+            if (!context.Driver.Any())
+            {
+
+                var driver = new Driver(){Id=1, DriverId="40244447290", Name="Armando", LastName="Paredes", Number="8095623651"};
+                context.Driver.AddRange(driver);
             }
         }
     }
