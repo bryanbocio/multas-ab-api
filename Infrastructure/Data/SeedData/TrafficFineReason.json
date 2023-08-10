@@ -32,12 +32,12 @@
   },
   {
     "Id": 7,
-    "Reason": "AA6 Vehículo con luces intermitentes no funcionales circulando",
+    "Reason": "AA7 Vehículo con luces intermitentes no funcionales circulando",
     "Price": 700
   },
   {
     "Id": 8,
-    "Reason": "Motorista circulando sin casco de protección",
+    "Reason": "AA8 Motorista circulando sin casco de protección",
     "Price": 700
   }
 ]

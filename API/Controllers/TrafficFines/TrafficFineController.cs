@@ -119,8 +119,8 @@ namespace API.Controllers.TrafficFines
             TrafficFineReason reason4= new TrafficFineReason(4, "AA4 No respetó una señal de PARE", 2000);
             TrafficFineReason reason5= new TrafficFineReason(5, "AA5 Placa de automovil vencida", 2000);
             TrafficFineReason reason6= new TrafficFineReason(6, "AA6 Vehículo circulando sin marbete", 2000);
-            TrafficFineReason reason7= new TrafficFineReason(7, "AA6 Vehículo con luces intermitentes no funcionales circulando", 2000);
-            TrafficFineReason reason8= new TrafficFineReason(8, "Motorista circulando sin casco de protección", 2000);
+            TrafficFineReason reason7= new TrafficFineReason(7, "AA7 Vehículo con luces intermitentes no funcionales circulando", 2000);
+            TrafficFineReason reason8= new TrafficFineReason(8, "AA8 Motorista circulando sin casco de protección", 2000);
 
             lstReasons.Add(reason1);
             lstReasons.Add(reason2);

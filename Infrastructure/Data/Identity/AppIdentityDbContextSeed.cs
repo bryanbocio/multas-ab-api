@@ -39,7 +39,7 @@ namespace Infrastructure.Data.Identity
                  var agent = new AppUser()
                 {
                     IdentityAppUser = "302111172990",
-                    Email = "josermartinez@gmail.com",
+                    Email = "josemartinez@gmail.com",
                     UserName = "Jose",
                 };
 
