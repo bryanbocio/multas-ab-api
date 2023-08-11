@@ -14,7 +14,7 @@ namespace Core.Specification
         public TrafficFineWithDriverAndAgentSpecification(TrafficFineSpecificationParameters parameters) 
             : base(fine=>
 
-                (string.IsNullOrEmpty(parameters.Search) || fine.CarPlate.ToLower().Contains(parameters.Search))
+                (string.IsNullOrEmpty(parameters.Search) || fine.Reason.ToLower().Contains(parameters.Search))
                  &&
                 (!parameters.DriverId.HasValue || fine.DriverId == parameters.DriverId)
                 &&
