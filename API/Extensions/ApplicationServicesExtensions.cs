@@ -1,6 +1,7 @@
 ﻿using API.Errors;
 using API.Helpers;
 using Core.Interfaces.GenericRepository;
+using Core.Interfaces.Payment;
 using Core.Interfaces.Reporitories.BasketRepository;
 using Core.Interfaces.Services;
 using Core.Interfaces.Tokens;
@@ -23,6 +24,8 @@ namespace API.Extensions
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITrafficFineService, TrafficFineService>();

@@ -10,5 +10,6 @@ namespace Core.Interfaces.Services
     public interface ITrafficFineService
     {
         Task<TrafficFine> CreateTrafficFine(string driverIdentity, string agentIdentity, string carPlate, string Reason, string comment, string latitude, string longitude, DateTime dateCreate);
+        Task SwitchThePaymentStatusToATrafficFineAlreadyPaid(int trafficFineId);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Core.Entities.TrafficFine
+﻿using Core.Enums;
+
+namespace Core.Entities.TrafficFine
 {
     public class TrafficFine : BaseEntity
     {
@@ -12,6 +14,7 @@
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public DateTime DateCreated { get; }= DateTime.Now;
+        public string Status { get; set; } = PaymentStatus.PENDIENTE.ToString();
 
 
         public TrafficFine()

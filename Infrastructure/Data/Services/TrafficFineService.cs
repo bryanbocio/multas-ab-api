@@ -1,14 +1,10 @@
 ﻿using Core.Entities.Agent;
 using Core.Entities.Driver;
 using Core.Entities.TrafficFine;
+using Core.Enums;
 using Core.Interfaces.Services;
 using Core.Interfaces.UnitOfWork;
 using Core.Specification;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.Services
 {
@@ -46,7 +42,17 @@ namespace Infrastructure.Data.Services
 
 
             return trafficFine;
+        }
 
+        public async Task SwitchThePaymentStatusToATrafficFineAlreadyPaid(int trafficFineId)
+        {
+            var trafficFine= await _unitOfWork.Repository<TrafficFine>().GetByIdAsync(trafficFineId);
+
+            if(trafficFine is not null)
+            {
+                trafficFine.Status = PaymentStatus.PAGADO.ToString();
+                await _unitOfWork.Complete();
+            }
 
 
         }

@@ -35,6 +35,29 @@ namespace Infrastructure.Data.Identity
                 await userManager.AddToRoleAsync(user, Roles.USER.ToString());
                 await userManager.AddToRoleAsync(user, Roles.AGENT.ToString());
 
+
+                 var agent = new AppUser()
+                {
+                    IdentityAppUser = "302111172990",
+                    Email = "josemartinez@gmail.com",
+                    UserName = "Jose",
+                };
+
+                await userManager.CreateAsync(agent, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(agent, Roles.AGENT.ToString());
+
+                var driver = new AppUser()
+                {
+                    IdentityAppUser = "40244447290",
+                    Email = "armandoparedes@gmail.com",
+                    UserName = "Armando",
+                };
+
+                await userManager.CreateAsync(driver, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(driver, Roles.USER.ToString());
+
+
+
             }
         }
     }

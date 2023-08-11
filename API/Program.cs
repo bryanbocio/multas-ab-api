@@ -1,4 +1,5 @@
 using Core.Entities.Identity;
+using Infrastructure.Data;
 using Infrastructure.Data.Context;
 using Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -28,7 +29,7 @@ namespace API
                     await identityContext.Database.MigrateAsync();
 
                     await AppIdentityDbContextSeed.SeedUserAsync(userManager,roleManager);
-
+                    await ContextSeedData.SeeDataAsync(trafficDbContext, loggerFactory);
 
                 }
                 catch (Exception exception)

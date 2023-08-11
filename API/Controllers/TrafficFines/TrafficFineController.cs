@@ -21,6 +21,7 @@ namespace API.Controllers.TrafficFines
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITrafficFineService _trafficFineService;
         private readonly IMapper _mapper;
+        private static IList<TrafficFineReason> trafficFineReasonsCache= new List<TrafficFineReason>();
 
         public TrafficFineController(IMapper mapper,IUnitOfWork unitOfWork, ITrafficFineService trafficFineService)
         {
@@ -78,11 +79,6 @@ namespace API.Controllers.TrafficFines
             return Ok(trafficFine);
         }
 
-        
-
-
-
-
         [Authorize(Roles ="ADMIN, AGENT")]
         [HttpPost]
         public async Task<ActionResult<TrafficFine>> CreateTrafficFine(TrafficFineDto trafficFineDto)
@@ -109,9 +105,38 @@ namespace API.Controllers.TrafficFines
             return Ok(trafficFineCreated);
         }
 
+        [HttpGet("reasons")]
+        public async Task<IList<TrafficFineReason>> GetTrafficFinesReasons()
+        {
+           
 
 
-        
+            List<TrafficFineReason> lstReasons= new  List<TrafficFineReason>();
+
+            TrafficFineReason reason1= new TrafficFineReason(1, "AA1 Se pasó un semáforo en rojo", 2000);
+            TrafficFineReason reason2= new TrafficFineReason(2, "AA2 Falta de respeto autoridad de tráncito", 2000);
+            TrafficFineReason reason3= new TrafficFineReason(3, "AA3 Dobló en U donde no debía", 2000);
+            TrafficFineReason reason4= new TrafficFineReason(4, "AA4 No respetó una señal de PARE", 2000);
+            TrafficFineReason reason5= new TrafficFineReason(5, "AA5 Placa de automovil vencida", 2000);
+            TrafficFineReason reason6= new TrafficFineReason(6, "AA6 Vehículo circulando sin marbete", 2000);
+            TrafficFineReason reason7= new TrafficFineReason(7, "AA7 Vehículo con luces intermitentes no funcionales circulando", 2000);
+            TrafficFineReason reason8= new TrafficFineReason(8, "AA8 Motorista circulando sin casco de protección", 2000);
+
+            lstReasons.Add(reason1);
+            lstReasons.Add(reason2);
+            lstReasons.Add(reason3);
+            lstReasons.Add(reason4);
+            lstReasons.Add(reason5);
+            lstReasons.Add(reason6);
+            lstReasons.Add(reason7);
+            lstReasons.Add(reason8);
+
+
+
+          
+
+            return lstReasons;
+        }
 
     }
 }

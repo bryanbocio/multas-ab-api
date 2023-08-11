@@ -1,0 +1,43 @@
+[
+  {
+    "Id": 1,
+    "Reason": "AA1 Pas sem�foro en rojo",
+    "Price": 100
+  },
+  {
+    "Id": 2,
+    "Reason": "AA2 Falta de respeto autoridad de tr�ncito",
+    "Price": 2000
+  },
+  {
+   
+    "Id": 3,
+    "Reason": "AA3 Dobl� en U donde no deb�a",
+    "Price": 800
+  },
+  {
+    "Id": 4,
+    "Reason": "AA4 No respet� una se�al de PARE",
+    "Price": 700
+  },
+  {
+    "Id": 5,
+    "Reason": "AA5 Placa de automovil vencida",
+    "Price": 700
+  },
+  {
+    "Id": 6,
+    "Reason": "AA6 Vehículo circulando sin marbete",
+    "Price": 700
+  },
+  {
+    "Id": 7,
+    "Reason": "AA7 Vehículo con luces intermitentes no funcionales circulando",
+    "Price": 700
+  },
+  {
+    "Id": 8,
+    "Reason": "AA8 Motorista circulando sin casco de protección",
+    "Price": 700
+  }
+]
