@@ -83,30 +83,23 @@ namespace API.Controllers.TrafficFines
         [HttpPost]
         public async Task<ActionResult<TrafficFine>> CreateTrafficFine(TrafficFineDto trafficFineDto)
         {
-            if (_unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(trafficFineDto.DriverIdentity)) == null)
+
+            var driver=await  _unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(trafficFineDto.DriverIdentity));
+
+            if (driver == null)
             {
-
-
                 _unitOfWork.Repository<Driver>().Add( new Driver(){DriverId=trafficFineDto.DriverIdentity,LastName=trafficFineDto.DriverName, Number=trafficFineDto.DriverPhoneNumber });
 
                 var result=await _unitOfWork.Complete();
+
                 if (result <= 0) return BadRequest(new ApiResponse(404, "The driver does not exists and couldn't be added"));
+
+                driver =await  _unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(trafficFineDto.DriverIdentity));
             }
 
+            var traficFineForCreating = BuildTrafficFine(trafficFineDto);
 
-            var traficFineForCreating = new TrafficFine(){  };
-
-            var trafficFineCreated=await _trafficFineService.CreateTrafficFine
-                (
-                 trafficFineDto.DriverIdentity,
-                 trafficFineDto.AgentIdentity,
-                 trafficFineDto.CarPlate,
-                 trafficFineDto.Reason,
-                 trafficFineDto.Comment,
-                 trafficFineDto.Latitude,
-                 trafficFineDto.Longitude,
-                 trafficFineDto.DateCreated
-                );
+            var trafficFineCreated= await _trafficFineService.CreateTrafficFine(trafficFine: traficFineForCreating, driver, trafficFineDto.AgentIdentity);
 
             if (trafficFineCreated == null) return BadRequest(new ApiResponse(400, "Problems creating traffic fine"));
 
@@ -120,6 +113,7 @@ namespace API.Controllers.TrafficFines
            if (!trafficFineReasonsCache.Any())
             {
                 var reasons = await _unitOfWork.Repository<TrafficFineReason>().GetAllAsync();
+                
                 foreach (var reason in reasons)
                 {
                     trafficFineReasonsCache.Add(reason);
@@ -128,6 +122,16 @@ namespace API.Controllers.TrafficFines
 
             return trafficFineReasonsCache;
 
+        }
+
+        private TrafficFine BuildTrafficFine(TrafficFineDto trafficFineDto){
+            return new TrafficFine(){ 
+                                                            CarPlate=trafficFineDto.CarPlate, 
+                                                            Comment=trafficFineDto.Comment,
+                                                            Reason=trafficFineDto.Reason,
+                                                            Latitude=trafficFineDto.Latitude,
+                                                            Longitude=trafficFineDto.Longitude,
+                    };
         }
 
     }

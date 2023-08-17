@@ -21,7 +21,7 @@ namespace Infrastructure.Data.Services
         {
             var driver = await  _unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(driverIdentity));
           
-            var agent  = await  _unitOfWork.Repository<Agent>().GetEntityWithSpecification(new AgentSpecification(agentIdentity));
+            var agent  = await  _unitOfWork.Repository<Agent>().GetEntityWithSpecification(new AgentSpecification(agentIdentity: agentIdentity));
 
             var trafficFine = new TrafficFine
                 (
@@ -40,6 +40,22 @@ namespace Infrastructure.Data.Services
 
             if (result <= 0) return null;
 
+
+            return trafficFine;
+        }
+
+        public async Task<TrafficFine> CreateTrafficFine(TrafficFine trafficFine, Driver driver, string agentIdentity)
+        {
+            var agent  = await  _unitOfWork.Repository<Agent>().GetEntityWithSpecification(new AgentSpecification(agentIdentity: agentIdentity));
+           
+            trafficFine.Driver=driver;
+            trafficFine.Agent=agent;
+       
+            _unitOfWork.Repository<TrafficFine>().Add(trafficFine);
+            
+            var result = await _unitOfWork.Complete();
+
+            if (result <= 0) return null;
 
             return trafficFine;
         }
