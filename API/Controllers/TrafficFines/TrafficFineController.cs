@@ -1,4 +1,4 @@
-﻿using API.DTOs;
+using API.DTOs;
 using API.Errors;
 using API.Helpers;
 using AutoMapper;
@@ -85,8 +85,16 @@ namespace API.Controllers.TrafficFines
         {
             if (_unitOfWork.Repository<Driver>().GetEntityWithSpecification(new DriverSpecification(trafficFineDto.DriverIdentity)) == null)
             {
-                return BadRequest(new ApiResponse(404, "The driver does not exists"));
+
+
+                _unitOfWork.Repository<Driver>().Add( new Driver(){DriverId=trafficFineDto.DriverIdentity,LastName=trafficFineDto.DriverName, Number=trafficFineDto.DriverPhoneNumber });
+
+                var result=await _unitOfWork.Complete();
+                if (result <= 0) return BadRequest(new ApiResponse(404, "The driver does not exists and couldn't be added"));
             }
+
+
+            var traficFineForCreating = new TrafficFine(){  };
 
             var trafficFineCreated=await _trafficFineService.CreateTrafficFine
                 (
@@ -109,33 +117,17 @@ namespace API.Controllers.TrafficFines
         public async Task<IList<TrafficFineReason>> GetTrafficFinesReasons()
         {
            
+           if (!trafficFineReasonsCache.Any())
+            {
+                var reasons = await _unitOfWork.Repository<TrafficFineReason>().GetAllAsync();
+                foreach (var reason in reasons)
+                {
+                    trafficFineReasonsCache.Add(reason);
+                }
+            }
 
+            return trafficFineReasonsCache;
 
-            List<TrafficFineReason> lstReasons= new  List<TrafficFineReason>();
-
-            TrafficFineReason reason1= new TrafficFineReason(1, "AA1 Se pasó un semáforo en rojo", 2000);
-            TrafficFineReason reason2= new TrafficFineReason(2, "AA2 Falta de respeto autoridad de tráncito", 2000);
-            TrafficFineReason reason3= new TrafficFineReason(3, "AA3 Dobló en U donde no debía", 2000);
-            TrafficFineReason reason4= new TrafficFineReason(4, "AA4 No respetó una señal de PARE", 2000);
-            TrafficFineReason reason5= new TrafficFineReason(5, "AA5 Placa de automovil vencida", 2000);
-            TrafficFineReason reason6= new TrafficFineReason(6, "AA6 Vehículo circulando sin marbete", 2000);
-            TrafficFineReason reason7= new TrafficFineReason(7, "AA7 Vehículo con luces intermitentes no funcionales circulando", 2000);
-            TrafficFineReason reason8= new TrafficFineReason(8, "AA8 Motorista circulando sin casco de protección", 2000);
-
-            lstReasons.Add(reason1);
-            lstReasons.Add(reason2);
-            lstReasons.Add(reason3);
-            lstReasons.Add(reason4);
-            lstReasons.Add(reason5);
-            lstReasons.Add(reason6);
-            lstReasons.Add(reason7);
-            lstReasons.Add(reason8);
-
-
-
-          
-
-            return lstReasons;
         }
 
     }
